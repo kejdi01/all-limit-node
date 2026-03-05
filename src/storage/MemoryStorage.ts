@@ -1,11 +1,11 @@
-import type { StorageAdapter, UserData } from "./StorageAdapter";
+import type { StorageAdapter } from "./StorageAdapter";
 
-export class MemoryStorage implements StorageAdapter {
-  private cacheMap = new Map<string, UserData>();
+export class MemoryStorage<T> implements StorageAdapter<T> {
+  private cacheMap = new Map<string, T>();
   private timers = new Map<string, any>();
 
-  async set(key: string, userData: UserData, ttl: number): Promise<void> {
-    this.cacheMap.set(key, userData);
+  async set(key: string, value: T, ttl: number): Promise<void> {
+    this.cacheMap.set(key, value);
 
     if (this.timers.has(key)) clearTimeout(this.timers.get(key));
 
@@ -17,11 +17,11 @@ export class MemoryStorage implements StorageAdapter {
     this.timers.set(key, timeout);
   }
 
-  async get(userID: string): Promise<UserData | undefined> {
-    return this.cacheMap.get(userID);
+  async get(key: string): Promise<T | undefined> {
+    return this.cacheMap.get(key);
   }
 
-  async delete(userID: string): Promise<void> {
-    this.cacheMap.delete(userID);
+  async delete(key: string): Promise<void> {
+    this.cacheMap.delete(key);
   }
 }

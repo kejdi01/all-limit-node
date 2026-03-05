@@ -1,8 +1,8 @@
-import { FixedWindow } from "./algorithms/FixedWindow";
+import { FixedWindow, FixedWindowState } from "./algorithms/FixedWindow";
 import { RateLimiter } from "./core/RateLimiter";
 import { MemoryStorage } from "./storage/MemoryStorage";
 
-const storage = new MemoryStorage();
+const storage = new MemoryStorage<FixedWindowState>();
 const algorithm = new FixedWindow(storage, 5, 10000);
 const limiter = new RateLimiter(algorithm);
 

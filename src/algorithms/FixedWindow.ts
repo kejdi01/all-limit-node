@@ -2,10 +2,14 @@ import { StorageAdapter } from "../storage/StorageAdapter";
 import { RateLimiterResponse } from "../types/RateLimiterResponse";
 import { AlgorithmAdapter } from "./AlgorithmAdapter";
 
+export type FixedWindowState = {
+  count: number;
+  expiresAt: number;
+};
 
 export class FixedWindow implements AlgorithmAdapter {
   constructor(
-    private storage: StorageAdapter,
+    private storage: StorageAdapter<FixedWindowState>,
     private limit: number,
     private window: number,
   ) {}
@@ -19,6 +23,7 @@ export class FixedWindow implements AlgorithmAdapter {
     }
 
     const allowed = userData.count < this.limit;
+
     if (allowed) {
       userData.count++;
       const remainingTTL = userData.expiresAt - now;
