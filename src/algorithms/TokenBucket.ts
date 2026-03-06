@@ -7,7 +7,7 @@ export type TokenBucketState = {
   lastRefillTimestamp: number;
 };
 
-type TokenBucketOptions = {
+export type TokenBucketOptions = {
   capacity?: number;
   refillRate?: number;
   refillInterval?: number;
@@ -37,7 +37,9 @@ export class TokenBucket implements AlgorithmAdapter {
   public async consume(key: string): Promise<RateLimiterResponse> {
     const now = Date.now();
 
-    const tokenBucketState: TokenBucketState = (await this.storage.get(key)) || {
+    const tokenBucketState: TokenBucketState = (await this.storage.get(
+      key,
+    )) || {
       tokens: this.options.capacity,
       lastRefillTimestamp: now,
     };
@@ -53,7 +55,8 @@ export class TokenBucket implements AlgorithmAdapter {
         this.options.capacity,
         tokenBucketState.tokens + tokensToAdd,
       );
-      tokenBucketState.lastRefillTimestamp += tokensToAdd * this.options.refillInterval;
+      tokenBucketState.lastRefillTimestamp +=
+        tokensToAdd * this.options.refillInterval;
     }
 
     const allowed = tokenBucketState.tokens > 0;

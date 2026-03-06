@@ -7,7 +7,7 @@ export type FixedWindowState = {
   expiresAt: number;
 };
 
-type FixedWindowOptions = {
+export type FixedWindowOptions = {
   limit?: number;
   window?: number;
 };
