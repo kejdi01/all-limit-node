@@ -1,8 +1,6 @@
 import type { AlgorithmAdapter } from "../algorithms/AlgorithmAdapter";
 import { RateLimiterResponse } from "../types/RateLimiterResponse";
 
-
-
 export class RateLimiter {
   constructor(private algorithm: AlgorithmAdapter) {}
 

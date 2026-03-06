@@ -1,16 +1,33 @@
-import { FixedWindow, FixedWindowState } from "./algorithms/FixedWindow";
 import { RateLimiter } from "./core/RateLimiter";
 import { MemoryStorage } from "./storage/MemoryStorage";
+import { TokenBucket, TokenBucketState } from "./algorithms/TokenBucket";
+import { FixedWindow, FixedWindowState } from "./algorithms/FixedWindow";
 
-const storage = new MemoryStorage<FixedWindowState>();
-const algorithm = new FixedWindow(storage, 5, 10000);
-const limiter = new RateLimiter(algorithm);
+const fixedStorage = new MemoryStorage<FixedWindowState>();
+const fixedAlgorithm = new FixedWindow(fixedStorage);
 
-async function runTest() {
-  for (let i = 0; i <= 6; i++) {
-    const result = await limiter.consume("alice");
-    console.log(result);
-  }
-}
+const tokenStorage = new MemoryStorage<TokenBucketState>();
+const tokenAlgorithm = new TokenBucket(tokenStorage);
 
-runTest();
+const limiter = new RateLimiter(tokenAlgorithm);
+
+// async function runTest() {
+//   for (let i = 0; i < 12; i++) {
+//     const result = await limiter.consume("alice");
+//     console.log(i, result);
+//   }
+
+//   setTimeout(async () => {
+//     console.log("after 2 seconds");
+
+//     const result = await limiter.consume("alice");
+//     console.log(result);
+//   }, 2000);
+// }
+
+// runTest();
+
+export { RateLimiter } from "./core/RateLimiter";
+export { MemoryStorage } from "./storage/MemoryStorage";
+export { TokenBucket } from "./algorithms/TokenBucket";
+export { FixedWindow } from "./algorithms/FixedWindow";
