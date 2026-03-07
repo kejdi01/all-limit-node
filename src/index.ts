@@ -17,3 +17,5 @@ export {
   createRateLimiter,
   type CreateLimiterOptions,
 } from "./helpers/createLimiter";
+
+export { rateLimit } from "./middleware/rateLimit";
