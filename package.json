@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "test-client": "tsx src/client.ts",
-    "test": "jest"
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
