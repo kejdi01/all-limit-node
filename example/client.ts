@@ -1,4 +1,4 @@
-import { rateLimit, TokenBucket } from "./index";
+import { rateLimit, TokenBucket } from "../src/index";
 import { createServer } from "http";
 
 const usersLimiter = rateLimit({

@@ -1,11 +1,16 @@
 {
   "name": "all-limit-node",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "start": "tsx src/index.ts",
-    "test-client": "tsx src/client.ts",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test-client": "tsx example/client.ts",
     "test": "jest --verbose --coverage"
   },
   "keywords": [],
